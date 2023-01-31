@@ -116,7 +116,7 @@ EOS
             }
 
             resources {
-                cpu    = 10000
+                cpu    = 3000
                 memory = 16000
             }
             
