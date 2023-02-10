@@ -103,6 +103,7 @@ main:
   allow_username_or_email_login: false
   lowercase_usernames: false
 EOS
+prometheus['enable'] = false
                 EOH
             }
 
