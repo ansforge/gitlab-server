@@ -104,6 +104,22 @@ main:
   lowercase_usernames: false
 EOS
 prometheus['enable'] = false
+# Configuration vers le proxy sortant de l'ANS
+gitlab_rails['env'] = {
+  "http_proxy" => "${url_proxy_sortant_http}",
+  "https_proxy" => "${url_proxy_sortant_https}",
+  "no_proxy" => "${url_proxy_sortant_no_proxy}"
+}
+gitaly['env'] = {
+    "http_proxy" => "${url_proxy_sortant_http}",
+    "https_proxy" => "${url_proxy_sortant_https}",
+    "no_proxy" => "${url_proxy_sortant_no_proxy}"
+}
+gitlab_workhorse['env'] = {
+    "http_proxy" => "${url_proxy_sortant_http}",
+    "https_proxy" => "${url_proxy_sortant_https}",
+    "no_proxy" => "${url_proxy_sortant_no_proxy}"
+}
                 EOH
             }
 
