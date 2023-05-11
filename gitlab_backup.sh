@@ -4,7 +4,7 @@ echo "Démarrage du script de sauvegarde de GitLab"
 # Nom du script     : gitlab-backup.sh
 # Auteur            : E.RIEGEL (QM HENIX)
 # Date de Création  : 22/02/2023
-# Version           : 0.0.1
+# Version           : 1.0.0
 # Descritpion       : Script permettant la sauvegarde des données de Gitlab
 #
 # Historique des mises à jour :
