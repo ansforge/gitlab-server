@@ -121,6 +121,8 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
+nginx['listen_port'] = 80
+nginx['listen_https'] = false
                 EOH
             }
 
