@@ -78,6 +78,7 @@ EOH
                 destination = "secrets/gitlab.ans.rb"
                 change_mode = "restart"
                 data = <<EOH
+external_url '${external_url_gitlab_protocole}://${external_url_gitlab_hostname}'
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
 {{ end }}
@@ -140,14 +141,14 @@ gitlab_workhorse['env'] = {
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
                 tags = ["urlprefix-${external_url_gitlab_hostname}/"]
-                port = "gitlab"
+                port = "gitlab-https"
                 check {
                     name     = "alive"
                     type     = "tcp"
                     interval = "60s"
                     timeout  = "10s"
                     failures_before_critical = 5
-                    port     = "gitlab"
+                    port     = "gitlab-https"
                 }
             }
         } 
