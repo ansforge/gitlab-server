@@ -143,14 +143,14 @@ nginx['listen_https'] = false
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
                 tags = ["urlprefix-${external_url_gitlab_hostname}/"]
-                port = "gitlab-https"
+                port = "gitlab"
                 check {
                     name     = "alive"
                     type     = "tcp"
                     interval = "60s"
                     timeout  = "10s"
                     failures_before_critical = 5
-                    port     = "gitlab-https"
+                    port     = "gitlab"
                 }
             }
         } 
