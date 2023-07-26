@@ -6,7 +6,7 @@ runner {
     enabled = true
     data_source "git" {
         url  = "https://github.com/ansforge/gitlab-server.git"
-        ref  = "main"
+        ref  = "henix_docker_platform_pv3"
         path = "gitlab"
         ignore_changes_outside_path = true
     }
