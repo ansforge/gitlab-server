@@ -68,8 +68,6 @@ job "forge-gitlab" {
             template {
                 data = <<EOH
 EXTERNAL_URL="${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
-GITLAB_SKIP_UNMIGRATED_DATA_CHECK=true
-MAX_DATABASE_CONNECTION_CHECKS=5
 EOH
                 destination = "secrets/file.env"
                 change_mode = "restart"
