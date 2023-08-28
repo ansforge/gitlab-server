@@ -28,9 +28,6 @@ job "forge-gitlab-runner-java" {
         task "gitlab-runner-java-autoregistered" {
             driver = "docker"
 
-            # log-shipper
-            leader = true 
-
             template {
 
             data = <<EOH
@@ -108,6 +105,9 @@ EOH
 
         task "gitlab-runner-java" {
             driver = "docker"
+
+            # log-shipper
+            leader = true 
 
             config {
 

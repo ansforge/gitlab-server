@@ -30,9 +30,6 @@ job "forge-gitlab" {
         task "prep-config" {
             driver = "docker"
 
-            # log-shipper
-            leader = true 
-
             config {
                 image = "busybox:latest"
                 mount {
@@ -67,6 +64,9 @@ job "forge-gitlab" {
 
         task "gitlab" {
             driver = "docker"
+
+            # log-shipper
+            leader = true
 
             template {
                 data = <<EOH
