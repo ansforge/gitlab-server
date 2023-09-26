@@ -26,7 +26,7 @@ echo "Démarrage du script de sauvegarde de GitLab"
 DATE=$(date +"%Y%m%d")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/BACKUP/GITLAB"
+BACKUP_DIR="/var/backup/GITLAB"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad

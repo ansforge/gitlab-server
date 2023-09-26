@@ -24,7 +24,7 @@ echo "Démarrage du script de sauvegarde de gitlab-runner-java"
 DATE=$(date +"%Y%m%d")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/BACKUP/GITLAB_RUNNER"
+BACKUP_DIR="/var/backup/GITLAB_RUNNER"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad
@@ -61,4 +61,3 @@ fi
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
 echo "GITLAB_RUNNER finished"
-
