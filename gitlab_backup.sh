@@ -4,7 +4,7 @@ echo "Démarrage du script de sauvegarde de GitLab"
 # Nom du script     : gitlab-backup.sh
 # Auteur            : E.RIEGEL (QM HENIX)
 # Date de Création  : 22/02/2023
-# Version           : 1.0.0
+# Version           : 0.0.3
 # Descritpion       : Script permettant la sauvegarde des données de Gitlab
 #
 # Historique des mises à jour :
@@ -12,6 +12,10 @@ echo "Démarrage du script de sauvegarde de GitLab"
 #  Version  |   Date   |   Auteur     |  Description
 #-----------+--------+-------------+------------------------------------------------------
 #  0.0.1    | 22/02/23 | E.RIEGEL     | Initialisation du script
+#-----------+--------+-------------+------------------------------------------------------
+#  0.0.2    | 06/03/23 | E.RIEGEL     | Ajout de la sauvegarde de /etc/gitlab
+#-----------+--------+-------------+------------------------------------------------------
+#  0.0.3    | 21/09/23 | Y.ETRILLARD  | Modification de la casse du path 
 #-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
@@ -22,16 +26,21 @@ echo "Démarrage du script de sauvegarde de GitLab"
 DATE=$(date +"%Y%m%d")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/BACKUP/GITLAB"
+BACKUP_DIR="/var/backup/GITLAB"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad
 NOMAD=$(which nomad)
 
-#Repo PATH To BACKUP in the container
-REPO_PATH=/var/opt
+#Repo PATH To BACKUP DATA in the container
+REPO_PATH_DATA=/var/opt
 #Archive Name of the backup repo directory
 BACKUP_REPO_FILENAME="BACKUP_DATA_GITLAB_${DATE}.tar.gz"
+
+#Repo PATH To BACKUP DATA in the container
+REPO_PATH_CONF=/etc
+#Archive Name of the backup repo directory
+BACKUP_CONF_FILENAME="BACKUP_CONF_GITLAB_${DATE}.tar.gz"
 
 
 # Nombre de jours à garder les dossiers (seront effacés après X jours)
@@ -45,17 +54,31 @@ mkdir -p $BACKUP_DIR/$DATE
 # Backup repos
 echo "Starting backup gitlab data..."
 
-$NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH gitlab > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
+$NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_DATA gitlab > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "Backup GitLab failed with error code : ${BACKUP_RESULT}"
+        echo "Backup GitLab Data failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "Backup GitLab done"
+        echo "Backup GitLab Data done"
+fi
+
+# Backup conf
+echo "Starting backup gitlab conf..."
+
+$NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_CONF gitlab > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
+BACKUP_RESULT=$?
+if [ $BACKUP_RESULT -gt 1 ]
+then
+        echo "Backup GitLab conf failed with error code : ${BACKUP_RESULT}"
+        exit 1
+else
+        echo "Backup GitLab Conf done"
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
 echo "Backup Gitlab finished"
+
