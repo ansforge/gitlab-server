@@ -121,6 +121,12 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
+external_url '${external_url_gitlab_protocole}://${external_url_gitlab_hostname}'
+nginx['listen_https'] = false
+nginx['proxy_set_headers'] = {
+  "X-Forwarded-Proto" => "http",
+  "CUSTOM_HEADER" => "VALUE"
+ }
                 EOH
             }
 
