@@ -67,7 +67,7 @@ job "forge-gitlab" {
 
             template {
                 data = <<EOH
-EXTERNAL_URL="${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
+EXTERNAL_URL="{external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
 EOH
                 destination = "secrets/file.env"
                 change_mode = "restart"
@@ -78,7 +78,7 @@ EOH
                 destination = "secrets/gitlab.ans.rb"
                 change_mode = "restart"
                 data = <<EOH
-
+external_url 'http://$NOMAD_ADDR_gitlab'
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
 {{ end }}
@@ -121,12 +121,6 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
-external_url 'http://10.3.8.166:29980'
-nginx['listen_https'] = false
-nginx['proxy_set_headers'] = {
-  "X-Forwarded-Proto" => "http",
-  "CUSTOM_HEADER" => "VALUE"
- }
                 EOH
             }
 
