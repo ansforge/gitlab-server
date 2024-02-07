@@ -78,7 +78,7 @@ EOH
                 destination = "secrets/gitlab.ans.rb"
                 change_mode = "restart"
                 data = <<EOH
-external_url '${external_url_gitlab_protocole}://${external_url_gitlab_hostname}'
+
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
 {{ end }}
@@ -86,6 +86,7 @@ gitlab_rails['ldap_enabled'] = true
 gitlab_rails['prevent_ldap_sign_in'] = false
 gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
 main:
+  external_url: '${external_url_gitlab_protocole}://${external_url_gitlab_hostname}'
   label: 'LDAP ANS'
 {{ range service "openldap-forge" }}
   host: '{{ .Address }}'
