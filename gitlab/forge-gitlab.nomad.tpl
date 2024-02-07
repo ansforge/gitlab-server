@@ -67,7 +67,7 @@ job "forge-gitlab" {
 
             template {
                 data = <<EOH
-#EXTERNAL_URL="${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
+EXTERNAL_URL="${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
 EOH
                 destination = "secrets/file.env"
                 change_mode = "restart"
@@ -86,7 +86,6 @@ gitlab_rails['ldap_enabled'] = true
 gitlab_rails['prevent_ldap_sign_in'] = false
 gitlab_rails['ldap_servers'] = YAML.load <<-'EOS'
 main:
-  external_url: '${external_url_gitlab_protocole}://${external_url_gitlab_hostname}'
   label: 'LDAP ANS'
 {{ range service "openldap-forge" }}
   host: '{{ .Address }}'
