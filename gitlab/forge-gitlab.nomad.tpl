@@ -67,7 +67,7 @@ job "forge-gitlab" {
 
             template {
                 data = <<EOH
-#EXTERNAL_URL="http://${external_url_gitlab_hostname}"
+#EXTERNAL_URL="https://${external_url_gitlab_hostname}"
 EOH
                 destination = "secrets/file.env"
                 change_mode = "restart"
