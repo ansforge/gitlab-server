@@ -32,7 +32,6 @@ job "forge-gitlab" {
 
             config {
                 image = "busybox:latest"
-                extra_hosts = ["gitlab.forge.henix.asipsante.fr:10.3.8.47"]
                 mount {
                     type = "volume"
                     target = "/etc/gitlab"
