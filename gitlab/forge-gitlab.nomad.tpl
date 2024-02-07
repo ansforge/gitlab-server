@@ -80,7 +80,7 @@ EOH
                 data = <<EOH
 external_url "https://${external_url_gitlab_hostname}"
 nginx[‘listen_port’] = 80
-nginx[‘listen_https’] = false"
+nginx[‘listen_https’] = false
 
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
