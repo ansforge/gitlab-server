@@ -67,7 +67,7 @@ job "forge-gitlab" {
 
             template {
                 data = <<EOH
-EXTERNAL_URL="${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
+EXTERNAL_URL="http://${external_url_gitlab_hostname}"
 EOH
                 destination = "secrets/file.env"
                 change_mode = "restart"
@@ -121,10 +121,6 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
-nginx['proxy_set_headers'] = {
-  "X-Forwarded-Proto" => "http",
-  "CUSTOM_HEADER" => "$hostname"
- }
                 EOH
             }
 
