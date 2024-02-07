@@ -78,7 +78,7 @@ EOH
                 destination = "secrets/gitlab.ans.rb"
                 change_mode = "restart"
                 data = <<EOH
-external_url "https://${external_url_gitlab_hostname}"
+external_url "${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
 nginx['listen_port'] = 80
 nginx['listen_https'] = false
 
