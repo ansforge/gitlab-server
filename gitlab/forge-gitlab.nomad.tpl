@@ -146,7 +146,8 @@ gitlab_workhorse['env'] = {
                 port = "gitlab"
                 check {
                     name     = "alive"
-                    type     = "tcp"
+                    type     = "http"
+                    path     = "users/sign_in"
                     interval = "60s"
                     timeout  = "10s"
                     failures_before_critical = 10 #5
