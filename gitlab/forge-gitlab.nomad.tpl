@@ -149,7 +149,7 @@ gitlab_workhorse['env'] = {
                     type     = "tcp"
                     interval = "60s"
                     timeout  = "10s"
-                    failures_before_critical = 5
+                    failures_before_critical = 10 #5
                     port     = "gitlab"
                 }
             }
