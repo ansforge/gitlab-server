@@ -50,7 +50,7 @@ variable "image" {
 
 variable "tag" {
     type    = string
-    default = "15.11.13-ce.0"
+    default = "16.10.1-ce.0"
 }
 
 variable "external_url_gitlab_hostname" {
