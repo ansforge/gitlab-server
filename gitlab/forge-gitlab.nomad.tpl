@@ -2,6 +2,18 @@ job "forge-gitlab" {
     datacenters = ["${datacenter}"]
     type = "service"
 
+    update {
+        # max_parallel      = 3
+        health_check      = "checks"
+        min_healthy_time  = "10s"
+        healthy_deadline  = "10m"
+        progress_deadline = "15m"
+        # auto_revert       = true
+        # auto_promote      = true
+        # canary            = 1
+        # stagger           = "30s"
+    }
+
     vault {
         policies = ["forge"]
         change_mode = "restart"
@@ -151,7 +163,6 @@ gitlab_workhorse['env'] = {
                 check {
                     name     = "alive"
                     type     = "tcp"
-                    #path     = "users/sign_in"
                     interval = "120s" #60s
                     timeout  = "5m" #10s
                     failures_before_critical = 10 #5
