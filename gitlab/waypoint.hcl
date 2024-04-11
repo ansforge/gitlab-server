@@ -27,8 +27,8 @@ app "forge/gitlab" {
             jobspec = templatefile("${path.app}/forge-gitlab.nomad.tpl", {
             image   = var.image
             tag     = var.tag
-            tag2    = var.tag2
-            tag3    = var.tag3
+            tag_patch   = var.tag_patch
+            tag_suffixe = var.tag_suffixe
             datacenter = var.datacenter
             external_url_gitlab_hostname = var.external_url_gitlab_hostname
             external_url_gitlab_protocole = var.external_url_gitlab_protocole
@@ -54,11 +54,11 @@ variable "tag" {
     type    = string
     default = "16.10."
 }
-variable "tag2" {
+variable "tag_patch" {
     type = string
     default = "1"
 }
-variable "tag3" {
+variable "tag_suffixe" {
     type = string
     default = "-ce.0"
 }
