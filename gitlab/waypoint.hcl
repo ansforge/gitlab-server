@@ -52,7 +52,7 @@ variable "image" {
 
 variable "tag" {
     type    = string
-    default = "16.10."
+    default = "16.10"
 }
 variable "tag_patch" {
     type = string
