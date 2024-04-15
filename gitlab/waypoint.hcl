@@ -40,9 +40,10 @@ app "forge/gitlab" {
     }
 }
 
-variable "datacenter" {
-    type    = string
-    default = "test"
+variable datacenter {
+    type = string
+    default = ""
+    env     = ["NOMAD_DC"]
 }
 
 variable "image" {
