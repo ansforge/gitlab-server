@@ -35,9 +35,10 @@ app "forge/gitlab-runner-java" {
     }
 }
 
-variable "datacenter" {
-    type    = string
-    default = "test"
+variable datacenter {
+    type = string
+    default = ""
+    env     = ["NOMAD_DC"]
 }
 
 variable "image" {

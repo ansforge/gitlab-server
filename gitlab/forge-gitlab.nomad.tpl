@@ -2,6 +2,18 @@ job "forge-gitlab" {
     datacenters = ["${datacenter}"]
     type = "service"
 
+    update {
+        # max_parallel      = 3
+        health_check      = "checks"
+        min_healthy_time  = "10s"
+        healthy_deadline  = "10m"
+        progress_deadline = "15m"
+        # auto_revert       = true
+        # auto_promote      = true
+        # canary            = 1
+        # stagger           = "30s"
+    }
+
     vault {
         policies = ["forge"]
         change_mode = "restart"
@@ -81,6 +93,10 @@ EOH
                 destination = "secrets/gitlab.ans.rb"
                 change_mode = "restart"
                 data = <<EOH
+external_url "${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
+nginx['listen_port'] = 80
+nginx['listen_https'] = false
+
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
 {{ end }}
@@ -127,7 +143,7 @@ gitlab_workhorse['env'] = {
             }
 
             config {
-                image   = "${image}:${tag}"
+                image   = "${image}:${tag}.${tag_patch}${tag_suffixe}"
                 ports   = ["gitlab", "gitlab-https", "gitlab-ssh"]
                 volumes = ["name=forge-gitlab-data,io_priority=high,size=40,repl=2:/var/opt/gitlab",
                            "name=forge-gitlab-logs,io_priority=high,size=2,repl=2:/var/log/gitlab",
@@ -147,9 +163,9 @@ gitlab_workhorse['env'] = {
                 check {
                     name     = "alive"
                     type     = "tcp"
-                    interval = "60s"
-                    timeout  = "10s"
-                    failures_before_critical = 5
+                    interval = "120s" #60s
+                    timeout  = "5m" #10s
+                    failures_before_critical = 10 #5
                     port     = "gitlab"
                 }
             }
