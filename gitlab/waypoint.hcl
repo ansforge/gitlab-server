@@ -27,6 +27,8 @@ app "forge/gitlab" {
             jobspec = templatefile("${path.app}/forge-gitlab.nomad.tpl", {
             image   = var.image
             tag     = var.tag
+            tag_patch   = var.tag_patch
+            tag_suffixe = var.tag_suffixe
             datacenter = var.datacenter
             external_url_gitlab_hostname = var.external_url_gitlab_hostname
             external_url_gitlab_protocole = var.external_url_gitlab_protocole
@@ -38,9 +40,10 @@ app "forge/gitlab" {
     }
 }
 
-variable "datacenter" {
-    type    = string
-    default = "test"
+variable datacenter {
+    type = string
+    default = ""
+    env     = ["NOMAD_DC"]
 }
 
 variable "image" {
@@ -50,7 +53,15 @@ variable "image" {
 
 variable "tag" {
     type    = string
-    default = "15.10.2-ce.0"
+    default = "16.10"
+}
+variable "tag_patch" {
+    type = string
+    default = "1"
+}
+variable "tag_suffixe" {
+    type = string
+    default = "-ce.0"
 }
 
 variable "external_url_gitlab_hostname" {
