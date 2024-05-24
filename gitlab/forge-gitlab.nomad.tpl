@@ -152,7 +152,7 @@ gitlab_workhorse['env'] = {
             }
 
             resources {
-                cpu    = 3000
+                cpu    = 4000
                 memory = 16000
             }
             
