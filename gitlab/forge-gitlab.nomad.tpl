@@ -143,6 +143,7 @@ gitlab_workhorse['env'] = {
             }
 
             config {
+                extra_hosts = [ "jenkins.internal:$\u007BNOMAD_IP_http\u007D" ]
                 image   = "${image}:${tag}.${tag_patch}${tag_suffixe}"
                 ports   = ["gitlab", "gitlab-https", "gitlab-ssh"]
                 volumes = ["name=forge-gitlab-data,io_priority=high,size=40,repl=2:/var/opt/gitlab",
@@ -158,7 +159,9 @@ gitlab_workhorse['env'] = {
             
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = ["urlprefix-${external_url_gitlab_hostname}/"]
+                tags = ["urlprefix-${external_url_gitlab_hostname}/",
+                        "urlprefix-gitlab.internal"
+                       ]
                 port = "gitlab"
                 check {
                     name     = "alive"
