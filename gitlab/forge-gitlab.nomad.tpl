@@ -143,8 +143,7 @@ gitlab_workhorse['env'] = {
             }
 
             config {
-                extra_hosts = [ "jenkins.internal:$\u007Battr.unique.network.ip-address\u007D",
-                                "gitlab.internal:$\u007Battr.unique.network.ip-address\u007D"
+                extra_hosts = [ "jenkins.internal:$\u007Battr.unique.network.ip-address\u007D"
                               ]
                 image   = "${image}:${tag}.${tag_patch}${tag_suffixe}"
                 ports   = ["gitlab", "gitlab-https", "gitlab-ssh"]
