@@ -178,14 +178,6 @@ gitlab_workhorse['env'] = {
                         "urlprefix-gitlab.internal/ proto=https tlsskipverify=true"
                        ]
                 port = "gitlab-https"
-                check {
-                    name     = "alive"
-                    type     = "tcp"
-                    interval = "120s" #60s
-                    timeout  = "5m" #10s
-                    failures_before_critical = 10 #5
-                    port     = "gitlab-https"
-                }
             }
         }
 
