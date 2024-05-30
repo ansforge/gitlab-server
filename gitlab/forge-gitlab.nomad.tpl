@@ -175,7 +175,7 @@ gitlab_workhorse['env'] = {
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D-https"
                 tags = [
-                        "urlprefix-gitlab.internal/"
+                        "urlprefix-gitlab.internal/ proto=https tlsskipverify=true"
                        ]
                 port = "gitlab-https"
                 check {
