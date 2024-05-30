@@ -94,8 +94,8 @@ EOH
                 change_mode = "restart"
                 data = <<EOH
 external_url "${external_url_gitlab_protocole}://${external_url_gitlab_hostname}"
-nginx['listen_port'] = 443
-nginx['listen_https'] = true
+nginx['listen_port'] = 80
+nginx['listen_https'] = false
 
 {{ with secret "forge/gitlab" }}
 gitlab_rails['initial_root_password'] = '{{ .Data.data.gitlab_root_password }}'
@@ -160,7 +160,8 @@ gitlab_workhorse['env'] = {
             
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = ["urlprefix-${external_url_gitlab_hostname}/"
+                tags = ["urlprefix-${external_url_gitlab_hostname}/",
+                        "urlprefix-gitlab.internal/"
                        ]
                 port = "gitlab"
                 check {
@@ -170,21 +171,6 @@ gitlab_workhorse['env'] = {
                     timeout  = "5m" #10s
                     failures_before_critical = 10 #5
                     port     = "gitlab"
-                }
-            }
-            service {
-                name = "$\u007BNOMAD_JOB_NAME\u007D-https"
-                tags = [
-                        "urlprefix-gitlab.internal/ proto=https"
-                       ]
-                port = "gitlab-https"
-                check {
-                    name     = "alive"
-                    type     = "tcp"
-                    interval = "120s" #60s
-                    timeout  = "5m" #10s
-                    failures_before_critical = 10 #5
-                    port     = "gitlab-https"
                 }
             }
         }
