@@ -160,7 +160,21 @@ gitlab_workhorse['env'] = {
             
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = ["urlprefix-${external_url_gitlab_hostname}/",
+                tags = ["urlprefix-${external_url_gitlab_hostname}/"
+                       ]
+                port = "gitlab"
+                check {
+                    name     = "alive"
+                    type     = "tcp"
+                    interval = "120s" #60s
+                    timeout  = "5m" #10s
+                    failures_before_critical = 10 #5
+                    port     = "gitlab"
+                }
+            }
+            service {
+                name = "$\u007BNOMAD_JOB_NAME\u007D-https"
+                tags = [
                         "urlprefix-gitlab.internal/"
                        ]
                 port = "gitlab-https"
@@ -170,7 +184,7 @@ gitlab_workhorse['env'] = {
                     interval = "120s" #60s
                     timeout  = "5m" #10s
                     failures_before_critical = 10 #5
-                    port     = "gitlab"
+                    port     = "gitlab-https"
                 }
             }
         }
