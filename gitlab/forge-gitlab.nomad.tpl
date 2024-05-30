@@ -163,7 +163,7 @@ gitlab_workhorse['env'] = {
                 tags = ["urlprefix-${external_url_gitlab_hostname}/",
                         "urlprefix-gitlab.internal/"
                        ]
-                port = "gitlab"
+                port = "gitlab-https"
                 check {
                     name     = "alive"
                     type     = "tcp"
