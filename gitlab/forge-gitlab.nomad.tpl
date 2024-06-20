@@ -139,6 +139,18 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
+
+# Configuration pour l'envoi de mails
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = {{ with secret "services-infrastructure/smtp" }}{{.Data.data.host}}{{end}}
+gitlab_rails['smtp_port'] = {{ with secret "services-infrastructure/smtp" }}{{.Data.data.port}}{{end}}
+gitlab_rails['smtp_domain'] = 'localhost'
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+gitlab_rails['smtp_enable_starttls_auto'] = false
+gitlab_rails['smtp_ssl'] = false
+gitlab_rails['smtp_force_ssl'] = false
+
                 EOH
             }
 
