@@ -15,7 +15,7 @@ job "forge-gitlab" {
     }
 
     vault {
-        policies = ["forge"]
+        policies = ["forge","smtp"]
         change_mode = "restart"
     }
     group "gitlab-server" {
