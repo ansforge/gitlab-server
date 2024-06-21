@@ -15,7 +15,7 @@ job "forge-gitlab" {
     }
 
     vault {
-        policies = ["forge"]
+        policies = ["forge","smtp"]
         change_mode = "restart"
     }
     group "gitlab-server" {
@@ -139,10 +139,24 @@ gitlab_workhorse['env'] = {
     "https_proxy" => "${url_proxy_sortant_https}",
     "no_proxy" => "${url_proxy_sortant_no_proxy}"
 }
+
+# Configuration pour l'envoi de mails
+gitlab_rails['smtp_enable'] = true
+gitlab_rails['smtp_address'] = {{ with secret "services-infrastructure/smtp" }}'{{.Data.data.host}}'{{end}}
+gitlab_rails['smtp_port'] = {{ with secret "services-infrastructure/smtp" }}'{{.Data.data.port}}'{{end}}
+gitlab_rails['smtp_domain'] = 'localhost'
+gitlab_rails['smtp_tls'] = false
+gitlab_rails['smtp_openssl_verify_mode'] = 'none'
+gitlab_rails['smtp_enable_starttls_auto'] = false
+gitlab_rails['smtp_ssl'] = false
+gitlab_rails['smtp_force_ssl'] = false
+
                 EOH
             }
 
             config {
+                extra_hosts = [ "jenkins.internal:$\u007Battr.unique.network.ip-address\u007D"
+                              ]
                 image   = "${image}:${tag}.${tag_patch}${tag_suffixe}"
                 ports   = ["gitlab", "gitlab-https", "gitlab-ssh"]
                 volumes = ["name=forge-gitlab-data,io_priority=high,size=40,repl=2:/var/opt/gitlab",
@@ -158,7 +172,9 @@ gitlab_workhorse['env'] = {
             
             service {
                 name = "$\u007BNOMAD_JOB_NAME\u007D"
-                tags = ["urlprefix-${external_url_gitlab_hostname}/"]
+                tags = ["urlprefix-${external_url_gitlab_hostname}/",
+                        "urlprefix-gitlab.internal/"
+                       ]
                 port = "gitlab"
                 check {
                     name     = "alive"
