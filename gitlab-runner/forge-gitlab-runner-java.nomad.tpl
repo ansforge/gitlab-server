@@ -98,8 +98,8 @@ EOH
             }
 
             resources {
-                cpu    = 500
-                memory = 512
+                cpu    = 200
+                memory = 128
             }
         }
 
@@ -174,8 +174,8 @@ EOH
                 image = "ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
-                cpu    = 100
-                memory = 150
+                cpu    = 50
+                memory = 100
             }
         } #end log-shipper 
     }
