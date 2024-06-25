@@ -167,7 +167,7 @@ gitlab_rails['smtp_force_ssl'] = false
 
             resources {
                 cpu    = 4000
-                memory = 16000
+                memory = 14336
             }
             
             service {
@@ -212,8 +212,8 @@ EOH
                 image = "ans/nomad-filebeat:8.2.3-2.0"
             }
             resources {
-                cpu    = 100
-                memory = 150
+                cpu    = 50
+                memory = 100
             }
         } #end log-shipper  
     }
