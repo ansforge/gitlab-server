@@ -150,6 +150,8 @@ gitlab_rails['smtp_openssl_verify_mode'] = 'none'
 gitlab_rails['smtp_enable_starttls_auto'] = false
 gitlab_rails['smtp_ssl'] = false
 gitlab_rails['smtp_force_ssl'] = false
+gitlab_rails['gitlab_email_from'] = 'gitlab@esante.gouv.fr'
+gitlab_rails['gitlab_email_reply_to'] = 'noreply@esante.gouv.fr'
 
                 EOH
             }
