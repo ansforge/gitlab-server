@@ -74,7 +74,7 @@ $NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_CONF gitlab >
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "${TIMESTAMP} Backup GitLab conf failed with error code : ${BACKUP_RESULT}"
+        echo "${TIMESTAMP} Backup GitLab Conf failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
         echo "${TIMESTAMP} Backup GitLab Conf done"
