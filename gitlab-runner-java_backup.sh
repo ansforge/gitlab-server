@@ -22,9 +22,10 @@ echo "Démarrage du script de sauvegarde de gitlab-runner-java"
 
 # Configuration de base: datestamp e.g. YYYYMMDD
 DATE=$(date +"%Y%m%d")
+TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/backup/GITLAB_RUNNER"
+BACKUP_DIR="/var/backup/gitlab_runner"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad
@@ -37,7 +38,7 @@ BACKUP_CONF_FILENAME="BACKUP_CONF_GITLAB_RUNNER_${DATE}.tar.gz"
 
 
 # Nombre de jours à garder les dossiers (seront effacés après X jours)
-RETENTION=3
+RETENTION=10
 
 # ---- NE RIEN MODIFIER SOUS CETTE LIGNE ------------------------------------------
 #
@@ -45,17 +46,19 @@ RETENTION=3
 mkdir -p $BACKUP_DIR/$DATE
 
 #  Backup conf
-echo "Starting backup GITLAB_RUNNER conf..."
+echo "${TIMESTAMP} Starting backup GITLAB_RUNNER conf..."
 
 $NOMAD exec -job -task gitlab-runner-java forge-gitlab-runner-java tar -cOzv -C $REPO_PATH_CONF/ . > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}"
+        echo "${TIMESTAMP} Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "Backup GITLAB_RUNNER conf"
+        echo "${TIMESTAMP} Backup GITLAB_RUNNER conf done"
 fi
+
+echo "${TIMESTAMP} Backup GITLAB_RUNNER finished"
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
