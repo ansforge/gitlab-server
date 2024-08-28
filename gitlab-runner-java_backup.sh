@@ -35,7 +35,7 @@ NOMAD=$(which nomad)
 #Repo PATH To BACKUP DATA in the container
 REPO_PATH_CONF=/etc/gitlab-runner
 #Archive Name of the backup repo directory
-BACKUP_CONF_FILENAME="BACKUP_CONF_GITLAB_RUNNER_${DATE}.tar.gz"
+BACKUP_CONF_FILENAME="backup_conf_gitlab_runner_${DATE}.tar.gz"
 
 
 # Nombre de jours à garder les dossiers (seront effacés après X jours)
