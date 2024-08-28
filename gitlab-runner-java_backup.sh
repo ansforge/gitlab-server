@@ -4,7 +4,7 @@ echo "Démarrage du script de sauvegarde de gitlab-runner-java"
 # Nom du script     : gitlab-runner-java-backup.sh
 # Auteur            : S.IBN CHARRADA (QM HENIX)
 # Date de Création  : 31/05/2023
-# Version           : 0.0.2
+# Version           : 1.0.0
 # Descritpion       : Script permettant la sauvegarde des données (configuration) de Gitlab
 #
 # Historique des mises à jour :
