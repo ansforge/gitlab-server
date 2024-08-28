@@ -17,6 +17,8 @@ echo "Démarrage du script de sauvegarde de GitLab"
 #-----------+--------+-------------+------------------------------------------------------
 #  0.0.3    | 21/09/23 | Y.ETRILLARD  | Modification de la casse du path 
 #-----------+--------+-------------+------------------------------------------------------
+#  1.0.0    | 28/08/24 | M. FAUREL    | Modification de la casse du backup_dir 
+#-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
 
@@ -26,7 +28,7 @@ echo "Démarrage du script de sauvegarde de GitLab"
 DATE=$(date +"%Y%m%d")
 
 # Dossier où sauvegarder les backups
-BACKUP_DIR="/var/backup/GITLAB"
+BACKUP_DIR="/var/backup/gitlab"
 
 # Commande NOMAD
 #NOMAD=/usr/local/bin/nomad
@@ -44,7 +46,7 @@ BACKUP_CONF_FILENAME="BACKUP_CONF_GITLAB_${DATE}.tar.gz"
 
 
 # Nombre de jours à garder les dossiers (seront effacés après X jours)
-RETENTION=3
+RETENTION=10
 
 # ---- NE RIEN MODIFIER SOUS CETTE LIGNE ------------------------------------------
 #
