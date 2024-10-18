@@ -168,7 +168,7 @@ gitlab_rails['gitlab_email_reply_to'] = 'noreply@esante.gouv.fr'
             }
 
             resources {
-                cpu    = 4000
+                cpu    = 6000
                 memory = 12288
             }
             
