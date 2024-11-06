@@ -17,13 +17,14 @@ echo "Démarrage du script de sauvegarde de gitlab-runner-java"
 #-----------+--------+-------------+------------------------------------------------------
 #  1.0.0    | 28/08/24 | M. FAUREL   | Modification de la casse du path et timestamp
 #-----------+--------+-------------+------------------------------------------------------
+#  1.0.1    | 06/11/24 | M. FAUREL   | Modification du timestamp
+#-----------+--------+-------------+------------------------------------------------------
 ###############################################################################################
 
 . /root/.bash_profile
 
 # Configuration de base: datestamp e.g. YYYYMMDD
 DATE=$(date +"%Y%m%d")
-TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Dossier où sauvegarder les backups
 BACKUP_DIR="/var/backup/gitlab_runner"
@@ -47,21 +48,19 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 #  Backup conf
-echo "${TIMESTAMP} Starting backup GITLAB_RUNNER conf..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup GITLAB_RUNNER conf..."
 
 $NOMAD exec -job -task gitlab-runner-java forge-gitlab-runner-java tar -cOzv -C $REPO_PATH_CONF/ . > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "${TIMESTAMP} Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "${TIMESTAMP} Backup GITLAB_RUNNER conf done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf done"
 fi
-
-echo "${TIMESTAMP} Backup GITLAB_RUNNER finished"
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "GITLAB_RUNNER finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER finished"
