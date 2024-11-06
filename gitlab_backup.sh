@@ -19,6 +19,8 @@ echo "Démarrage du script de sauvegarde de GitLab"
 #-----------+--------+-------------+------------------------------------------------------
 #  1.0.0    | 28/08/24 | M. FAUREL    | Modification de la casse du backup_dir 
 #-----------+--------+-------------+------------------------------------------------------
+#  1.0.1    | 06/11/24 | M. FAUREL   | Modification du timestamp
+#-----------+--------+-------------+------------------------------------------------------
 #
 ###############################################################################################
 
@@ -26,7 +28,6 @@ echo "Démarrage du script de sauvegarde de GitLab"
 
 # Configuration de base: datestamp e.g. YYYYMMDD
 DATE=$(date +"%Y%m%d")
-TIMESTAMP=$(date +"%Y-%m-%d %H:%M:%S")
 
 # Dossier où sauvegarder les backups
 BACKUP_DIR="/var/backup/gitlab"
@@ -55,33 +56,33 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 # Backup repos
-echo "${TIMESTAMP} Starting backup gitlab data..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab data..."
 
 $NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_DATA gitlab > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "${TIMESTAMP} Backup GitLab Data failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "${TIMESTAMP} Backup GitLab Data done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data done"
 fi
 
 # Backup conf
-echo "${TIMESTAMP} Starting backup gitlab conf..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab conf..."
 
 $NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_CONF gitlab > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "${TIMESTAMP} Backup GitLab Conf failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf failed with error code : ${BACKUP_RESULT}"
         exit 1
 else
-        echo "${TIMESTAMP} Backup GitLab Conf done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf done"
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "${TIMESTAMP} Backup Gitlab finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup Gitlab finished"
 
