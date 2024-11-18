@@ -160,6 +160,9 @@ gitlab_rails['gitlab_email_reply_to'] = 'noreply@esante.gouv.fr'
                 extra_hosts = [ "jenkins.internal:$\u007Battr.unique.network.ip-address\u007D"
                               ]
                 image   = "${image}:${tag}.${tag_patch}${tag_suffixe}"
+                args = [
+                        "--shm-size", "256m"
+                       ]
                 ports   = ["gitlab", "gitlab-https", "gitlab-ssh"]
                 volumes = ["name=forge-gitlab-data,io_priority=high,size=40,repl=2:/var/opt/gitlab",
                            "name=forge-gitlab-logs,io_priority=high,size=2,repl=2:/var/log/gitlab",
