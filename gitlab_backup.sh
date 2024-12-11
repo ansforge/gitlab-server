@@ -56,33 +56,33 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 # Backup repos
-echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab data..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab data..." >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
 
 $NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_DATA gitlab > $BACKUP_DIR/$DATE/$BACKUP_REPO_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data failed with error code : ${BACKUP_RESULT}" >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
         exit 1
 else
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Data done" >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
 fi
 
 # Backup conf
-echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab conf..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup gitlab conf..." >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
 
 $NOMAD exec -job -task gitlab forge-gitlab tar -cOzv -C $REPO_PATH_CONF gitlab > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf failed with error code : ${BACKUP_RESULT}" >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
         exit 1
 else
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GitLab Conf done" >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "$(date +"%Y-%m-%d %H:%M:%S") Backup Gitlab finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup Gitlab finished" >> $BACKUP_DIR/gitlab_backup-cron-`date +\%F`.log
 
