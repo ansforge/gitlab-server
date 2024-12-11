@@ -48,19 +48,19 @@ RETENTION=10
 mkdir -p $BACKUP_DIR/$DATE
 
 #  Backup conf
-echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup GITLAB_RUNNER conf..."
+echo "$(date +"%Y-%m-%d %H:%M:%S") Starting backup GITLAB_RUNNER conf..." >> $BACKUP_DIR/gitlab_runner_backup-cron-`date +\%F`.log
 
 $NOMAD exec -job -task gitlab-runner-java forge-gitlab-runner-java tar -cOzv -C $REPO_PATH_CONF/ . > $BACKUP_DIR/$DATE/$BACKUP_CONF_FILENAME
 BACKUP_RESULT=$?
 if [ $BACKUP_RESULT -gt 1 ]
 then
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf failed with error code : ${BACKUP_RESULT}" >> $BACKUP_DIR/gitlab_runner_backup-cron-`date +\%F`.log
         exit 1
 else
-        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf done"
+        echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER conf done" >> $BACKUP_DIR/gitlab_runner_backup-cron-`date +\%F`.log
 fi
 
 # Remove files older than X days
 find $BACKUP_DIR/* -mtime +$RETENTION -exec rm -rf {} \;
 
-echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER finished"
+echo "$(date +"%Y-%m-%d %H:%M:%S") Backup GITLAB_RUNNER finished" >> $BACKUP_DIR/gitlab_runner_backup-cron-`date +\%F`.log
