@@ -43,7 +43,7 @@ job "forge-gitlab" {
             driver = "docker"
 
             config {
-                image = "busybox:latest"
+                image = "busybox:1.37"
                 mount {
                     type = "volume"
                     target = "/etc/gitlab"
