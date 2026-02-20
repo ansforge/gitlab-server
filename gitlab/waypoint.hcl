@@ -48,7 +48,7 @@ variable datacenter {
 
 variable "image" {
     type    = string
-    default = "gitlab/gitlab-ce"
+    default = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/gitlab/gitlab-ce"
 }
 
 variable "tag" {
