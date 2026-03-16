@@ -43,7 +43,7 @@ job "forge-gitlab" {
             driver = "docker"
 
             config {
-                image = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/busybox:latest"
+                image = "614q518g.gra7.container-registry.ovh.net/dockerhub-proxy/busybox:1.37"
                 mount {
                     type = "volume"
                     target = "/etc/gitlab"
